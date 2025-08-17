@@ -33,8 +33,10 @@
     html,body{height:100%; scroll-behavior:smooth}
     body{margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--text); background:radial-gradient(1200px 800px at 10% -10%, rgba(124,92,255,.15), transparent), radial-gradient(900px 600px at 110% 10%, rgba(61,240,201,.13), transparent), var(--bg)}
 
+    body{scroll-snap-type:y proximity;}
+
     /* Layout: fullpage sections with scroll snap */
-    main{height:100vh; overflow-y:auto; scroll-snap-type:y mandatory; scroll-padding-top:80px}
+    main{scroll-padding-top:80px}
     section{min-height:100svh; padding:96px 24px 48px; display:grid; align-content:center; gap:28px; scroll-snap-align:start; position:relative}
 
     /* Navbar */
@@ -244,21 +246,13 @@
     </footer>
   </main>
 
-  <!-- Libraries -->
-  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-3S6o8bV3G+J4J9bYk6gY4m2M0q8Rmlk0t5B2y5kq0eQp7O6Lq9HkzV6m7H9S/7p1oT2m3+zUpS7m1xJf7V0z3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Libraries -->  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-3S6o8bV3G+J4J9bYk6gY4m2M0q8Rmlk0t5B2y5kq0eQp7O6Lq9HkzV6m7H9S/7p1oT2m3+zUpS7m1xJf7V0z3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-U1T7bH0V4qk8W0r3kA7a7Q8Q9hKxv1S9VtQ6KzJPCkH3BwqXJr1eQn9z1p0mG3Zp0nC8wFjv2k5l8l6EwZ7N+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
 
   <script>
     // Año footer
     document.getElementById('year').textContent = new Date().getFullYear()
-
-    // Smooth scroll (Lenis)
-    const lenis = new Lenis({lerp:0.12, wheelMultiplier: 0.9})
-    function raf(time){ lenis.raf(time); requestAnimationFrame(raf) }
-    requestAnimationFrame(raf)
-
     // Nav active on scroll
     const links = [...document.querySelectorAll('.nav a')]
     const sections = links.map(a => document.querySelector(a.getAttribute('href')))
@@ -275,12 +269,20 @@
     sections.forEach(s=>obs.observe(s))
 
     // GSAP: reveal animations
-    gsap.utils.toArray('section').forEach((sec,i)=>{
-      gsap.from(sec.querySelectorAll('.section-title, .section-sub, .card, .stack-item, form, .title, .lead, .cta, .blob'),{
-        opacity:0, y:20, duration:0.8, stagger:0.06,
-        scrollTrigger:{
-          trigger: sec, start:'top 70%', once:true
-        }
+    gsap.utils.toArray('section').forEach((sec)=>{
+      const els = sec.querySelectorAll('.section-title, .section-sub, .card, .stack-item, form, .title, .lead, .cta, .blob')
+      els.forEach((el)=>{
+        gsap.fromTo(el,
+          {autoAlpha:0, y:30},
+          {autoAlpha:1, y:0, ease:'none',
+            scrollTrigger:{
+              trigger: el,
+              start:'top 85%',
+              end:'top 40%',
+              scrub:true
+            }
+          }
+        )
       })
     })
 
