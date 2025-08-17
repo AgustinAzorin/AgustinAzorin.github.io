@@ -16,60 +16,81 @@ const obs = new IntersectionObserver((entries)=>{
 }, {rootMargin:'-40% 0px -50% 0px', threshold:0})
 sections.forEach(s=>obs.observe(s))
 
+// ==========================
 // GSAP + ScrollTrigger setup
+// ==========================
 if (window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger)
 
-  // 1) Reveal con fade-in/out SUAVE + STAGGER por sección
-  gsap.utils.toArray('section').forEach((sec)=>{
-    const els = sec.querySelectorAll('.section-title, .section-sub, .card, .stack-item, form, .title, .lead, .cta')
+  // Helper: revelar un BLOQUE (grupo de elementos) con scrub
+  function blockReveal(targets, opts={}){
+    const els = Array.isArray(targets) ? targets : [targets]
     gsap.set(els, {autoAlpha:0, y:26, willChange:'transform, opacity'})
-
-    const tl = gsap.timeline({
-      defaults:{ease:'power1.out'},
+    return gsap.to(els, {
+      autoAlpha:1, y:0,
+      stagger: opts.stagger ?? 0.08,
+      ease: opts.ease ?? 'power1.out',
       scrollTrigger:{
-        trigger: sec,
-        start:'top 80%',    // empieza a revelar al entrar la sección
-        end:'bottom 35%',   // termina de revelar cerca del final
-        scrub:true          // reversible y suave al volver
+        trigger: opts.trigger || (els[0] && els[0].closest('section')),
+        start: opts.start || 'top 78%',
+        end: opts.end   || 'bottom 40%',
+        scrub: true
       }
-    })
-
-    tl.to(els, {autoAlpha:1, y:0, stagger:0.12})
-  })
-
-  // 2) Parallax sutil
-  const blob = document.querySelector('.blob')
-  if(blob){
-    gsap.to(blob, {
-      yPercent:-8,
-      scrollTrigger:{ trigger:'#home', start:'top bottom', end:'bottom top', scrub:true }
     })
   }
+
+  // 0) Entrada inicial del HOME (sin scroll)
+  const home = document.querySelector('#home')
+  if(home){
+    const kicker = home.querySelector('.kicker')
+    const title  = home.querySelector('.title')
+    const lead   = home.querySelector('.lead')
+    const cta    = home.querySelector('.cta')
+    const blob   = home.querySelector('.blob')
+    gsap.set([kicker,title,lead,cta,blob], {autoAlpha:0})
+    const tl = gsap.timeline({defaults:{ease:'power2.out'}})
+    tl.fromTo(kicker,{y:20},{y:0, autoAlpha:1, duration:.35})
+      .fromTo(title,{y:28},{y:0, autoAlpha:1, duration:.5}, '-=0.1')
+      .fromTo(lead,{y:22},{y:0, autoAlpha:1, duration:.45}, '-=0.2')
+      .fromTo(cta,{y:18},{y:0, autoAlpha:1, duration:.4}, '-=0.25')
+      .fromTo(blob,{scale:.94},{scale:1, autoAlpha:1, duration:.6}, '-=0.3')
+  }
+
+  // 1) Parallax sutil
+  const blob = document.querySelector('.blob')
+  if(blob){
+    gsap.to(blob, { yPercent:-8, scrollTrigger:{ trigger:'#home', start:'top bottom', end:'bottom top', scrub:true } })
+  }
   gsap.utils.toArray('.project img').forEach((img)=>{
-    gsap.to(img, {
-      yPercent:-6,
-      scrollTrigger:{ trigger: img.closest('section'), start:'top bottom', end:'bottom top', scrub:true }
-    })
+    gsap.to(img, { yPercent:-6, scrollTrigger:{ trigger: img.closest('section'), start:'top bottom', end:'bottom top', scrub:true } })
   })
 
-  // 3) Stagger adicional por grupo en Services/Projects/Stack
-  ;['#services', '#projects', '#stack'].forEach(sel=>{
-    const container = document.querySelector(sel)
-    if(!container) return
-    const items = container.querySelectorAll(sel==='#stack' ? '.stack-item' : '.card')
-    if(!items.length) return
-    gsap.set(items, {autoAlpha:0, y:24})
-    gsap.to(items, {
-      autoAlpha:1, y:0,
-      stagger:0.08,
-      ease:'power1.out',
-      scrollTrigger:{
-        trigger: container,
-        start:'top 75%', end:'top 25%', scrub:true
-      }
-    })
-  })
+  // 2) BLOQUES por sección (en lugar de elemento a elemento)
+  // SERVICES
+  const secServices = document.querySelector('#services .wrap')
+  if(secServices){
+    blockReveal([secServices.querySelector('.section-title'), secServices.querySelector('.section-sub')], {trigger: secServices, stagger: 0})
+    blockReveal(secServices.querySelector('.grid.services'), {trigger: secServices})
+  }
+  // PROJECTS
+  const secProjects = document.querySelector('#projects .wrap')
+  if(secProjects){
+    blockReveal([secProjects.querySelector('.section-title'), secProjects.querySelector('.section-sub')], {trigger: secProjects, stagger: 0})
+    blockReveal(secProjects.querySelector('.grid.projects'), {trigger: secProjects})
+  }
+  // STACK (columnas por bloques)
+  const secStack = document.querySelector('#stack .wrap')
+  if(secStack){
+    blockReveal([secStack.querySelector('.section-title'), secStack.querySelector('.section-sub')], {trigger: secStack, stagger: 0})
+    const cols = secStack.querySelectorAll('.stack-col')
+    cols.forEach(col=> blockReveal(col, {trigger: secStack, start:'top 80%', end:'bottom 45%'}))
+  }
+  // CONTACT
+  const secContact = document.querySelector('#contact .wrap')
+  if(secContact){
+    blockReveal([secContact.querySelector('.section-title'), secContact.querySelector('.section-sub')], {trigger: secContact, stagger: 0})
+    blockReveal(secContact.querySelector('form'), {trigger: secContact})
+  }
 }
 
 // Tilt para cards
