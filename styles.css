@@ -102,12 +102,12 @@ section{min-height:100svh; padding:96px 24px 48px; display:grid; align-content:c
   filter: grayscale(1) brightness(0.7);
 }
 .stack-item:hover {
-  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
-  color: #fff;
-  box-shadow: 0 4px 24px 0 rgba(124,92,255,0.18);
+  background: #1a1c23;
+  color: inherit; /* Deja que el color lo defina la regla específica */
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
 }
 .stack-item:hover i {
-  color: #fff;
+  color: inherit; /* Deja que el color lo defina la regla específica */
   filter: none;
 }
 
