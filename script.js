@@ -3,7 +3,10 @@ document.getElementById('year').textContent = new Date().getFullYear()
 
 // Nav active on scroll
 const links = [...document.querySelectorAll('.nav a')]
-const sections = links.map(a => document.querySelector(a.getAttribute('href')))
+// Only observe sections that actually exist in the document to avoid runtime errors
+const sections = links
+  .map(a => document.querySelector(a.getAttribute('href')))
+  .filter(Boolean)
 const obs = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
