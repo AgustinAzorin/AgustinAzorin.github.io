@@ -93,9 +93,12 @@ footer{padding:28px 20px 40px; text-align:center; color:var(--muted)}
 
 /* Flecha scroll-down */
 .scroll-down {
-  position: static;
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 2;
   animation: bounce 2s infinite;
-  margin-top: 12px;
 }
 
 .scroll-down__svg {
@@ -139,5 +142,9 @@ footer{padding:28px 20px 40px; text-align:center; color:var(--muted)}
   align-items: center;
   justify-content: flex-start;
   gap: 18px;
+  position: relative;
+}
+
+#home {
   position: relative;
 }
