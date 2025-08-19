@@ -72,9 +72,10 @@ section{min-height:100svh; padding:96px 24px 48px; display:grid; align-content:c
 .stack-columns{display:grid; grid-template-columns:repeat(3, minmax(220px,1fr)); gap:18px}
 .stack-heading{margin:8px 0 10px; font-size:1.05rem; color:var(--muted)}
 .stack-list{display:grid; grid-template-columns:1fr; gap:12px}
-.stack-item{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; padding:16px; border:1px solid var(--border); background:var(--glass); border-radius:16px; min-height:110px}
-.stack-item i{font-size:34px}
-.stack-item span{font-weight:700; text-align:center}
+.stack-item{display:flex; align-items:center; gap:10px; padding:10px 18px; border-radius:10px; background:var(--glass); transition:background 0.18s cubic-bezier(.4,2,.6,1), color 0.18s cubic-bezier(.4,2,.6,1); cursor:pointer; color:var(--muted)}
+.stack-item i{font-size:1.5em; transition:color 0.18s cubic-bezier(.4,2,.6,1)}
+.stack-item:hover{background:linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%); color:#fff}
+.stack-item:hover i{color:#fff}
 @media (max-width: 900px){ .stack-columns{grid-template-columns:1fr} }
 
 /* Contact */
