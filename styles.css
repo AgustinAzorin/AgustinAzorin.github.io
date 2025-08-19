@@ -90,3 +90,42 @@ footer{padding:28px 20px 40px; text-align:center; color:var(--muted)}
 /* Responsive tweaks */
 @media (min-width: 1024px){ .hero{grid-template-columns:1.1fr .9fr} }
 @media (max-width: 1023px){ .hero{grid-template-columns:1fr} }
+
+/* Flecha scroll-down */
+.scroll-down {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounce 2s infinite;
+}
+
+.scroll-down__svg {
+  cursor: pointer;
+}
+
+.sd-circle {
+  stroke: var(--muted);
+  stroke-width: 2;
+  fill: transparent;
+  transition: stroke .3s;
+}
+
+.sd-arrow {
+  fill: var(--text);
+  transition: transform .3s;
+}
+
+.scroll-down__btn:hover .sd-circle {
+  stroke: var(--brand);
+}
+
+.scroll-down__btn:hover .sd-arrow {
+  transform: translateY(3px);
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+  40% { transform: translate(-50%, -10px); }
+  60% { transform: translate(-50%, -5px); }
+}

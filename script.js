@@ -3,7 +3,10 @@ document.getElementById('year').textContent = new Date().getFullYear()
 
 // Nav active on scroll
 const links = [...document.querySelectorAll('.nav a')]
-const sections = links.map(a => document.querySelector(a.getAttribute('href')))
+// Only observe sections that actually exist in the document to avoid runtime errors
+const sections = links
+  .map(a => document.querySelector(a.getAttribute('href')))
+  .filter(Boolean)
 const obs = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
@@ -96,6 +99,15 @@ if (window.gsap && window.ScrollTrigger) {
 // Tilt para cards
 if (window.VanillaTilt) {
   VanillaTilt.init(document.querySelectorAll('[data-tilt]'), {max:6, speed:600, glare:true, 'max-glare':.12})
+}
+
+// Scroll suave al hacer click en la flecha
+const scrollBtn = document.querySelector(".scroll-down__btn");
+if (scrollBtn) {
+  scrollBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    document.querySelector("#services").scrollIntoView({ behavior: "smooth" });
+  });
 }
 
 // Contact: mailto fallback simple
