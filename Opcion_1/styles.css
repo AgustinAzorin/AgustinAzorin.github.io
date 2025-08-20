@@ -119,13 +119,13 @@ section{min-height:100svh; padding:96px 24px 48px; display:grid; align-content:c
 .stack-item.css:hover,
 .stack-item.css:hover i { color: #1572b6; }
 .stack-item.sql:hover,
-.stack-item.sql:hover i { color: #003b57; }
+.stack-item.sql:hover i { color: #016492; }
 .stack-item.python:hover,
 .stack-item.python:hover i { color: #3776ab; }
 .stack-item.nodejs:hover,
-.stack-item.nodejs:hover i { color: #3c873a; }
+.stack-item.nodejs:hover i { color: #369233; }
 .stack-item.express:hover,
-.stack-item.express:hover i { color: #444; }
+.stack-item.express:hover i { color: #adacac; }
 .stack-item.jquery:hover,
 .stack-item.jquery:hover i { color: #0868ac; }
 .stack-item.tailwindcss:hover,
@@ -140,8 +140,10 @@ section{min-height:100svh; padding:96px 24px 48px; display:grid; align-content:c
 .stack-item.postgresql:hover i { color: #336791; }
 .stack-item.docker:hover,
 .stack-item.docker:hover i { color: #2496ed; }
+.stack-item.django:hover,
+.stack-item.django:hover i { color: #168b12; }
 .stack-item.github:hover,
-.stack-item.github:hover i { color: #24292e; }
+.stack-item.github:hover i { color: #fcfcfc; }
 .stack-item.gitlab:hover,
 .stack-item.gitlab:hover i { color: #fc6d26; }
 .stack-item.render:hover,

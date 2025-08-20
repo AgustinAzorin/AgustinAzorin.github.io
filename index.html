@@ -3,19 +3,218 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mis Portfolios</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <title>Portfolio • Tu Nombre</title>
+  <meta name="description" content="Portfolio de desarrollador backend. Proyectos, servicios, stack y contacto." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <!-- Devicon (logos de tecnologías) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.14.0/devicon.min.css">
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <div class="container">
-    <h1 class="title">Elegí tu Portfolio</h1>
-    <p class="subtitle">Cada botón te llevará a una versión distinta ✨</p>
-    <div class="buttons">
-      <a href="./Opcion_1/opcion_1.html" class="btn">Portfolio 1</a>
-      <a href="./Opcion_2/opcion_2.html" class="btn">Portfolio 2</a>
-      <a href="./Opcion_3/opcion_3.html" class="btn">Portfolio 3</a>
-    </div>
-  </div>
+  <!-- Navigation -->
+  <nav class="nav" aria-label="Primary">
+    <div class="brand"><span class="dot"></span><strong>Agustin Azorin</strong></div>
+    <ul>
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#stack">Skillset</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main id="container">
+    <!-- HOME -->
+    <section id="home" class="hero">
+      <div>
+        <p class="kicker">Backend Developer • APIs • Microservices</p>
+        <h1 class="title">Hola, soy <span class="gradient">Agustin Azorin</span>.<br/> <em>Backend Developer</em>.</h1>
+        <p class="lead"><p class="lead">
+          Me enfoco en el desarrollo backend, creando APIs y servicios que organizan información y automatizan procesos. 
+          Me interesa especialmente la arquitectura de sistemas, la gestión de datos y las integraciones que dan soporte a aplicaciones reales.
+        </p>
+        </p>
+        <div class="cta">
+          <a class="btn primary" href="#projects">Ver proyectos</a>
+          <a class="btn" href="#contact">Contactarme</a>
+        </div>
+      </div>
+      <div class="hero-img-col">
+        <div class="blob" aria-hidden="true"></div>
+      </div>
+      <!-- Flecha scroll-down DEBAJO de todo el contenido de .hero -->
+      <div class="scroll-down">
+        <a href="#services" class="scroll-down__btn" aria-label="Ir a servicios">
+          <svg class="scroll-down__svg" width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="28" cy="28" r="27" class="sd-circle"/>
+            <path class="sd-arrow" d="M28 14c1.1 0 2 .9 2 2v18.34l5.3-5.3a2 2 0 1 1 2.83 2.83l-9 9a2 2 0 0 1-2.83 0l-9-9a2 2 0 1 1 2.83-2.83l5.3 5.3V16c0-1.1.9-2 2-2Z"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services">
+      <div class="wrap">
+        <h2 class="section-title">Servicios</h2>
+        <p class="section-sub">Lo que puedo hacer por tu producto.</p>
+        <div class="grid services">
+          <article class="card" data-tilt>
+            <span class="chip">API REST • Express • Node</span>
+            <h3>Diseñar y desarrollar APIs</h3>
+            <p>Endpoints limpios, OOP, OS fundamentals, escalabilidad, rate limiting y código sostenible.</p>
+          </article>
+          <article class="card" data-tilt>
+            <span class="chip">Auth • JWT • OAuth</span>
+            <h3>Autenticación y seguridad</h3>
+            <p>Registro/login, recuperación de contraseña, roles y permisos, hardening básico y pruebas de seguridad.</p>
+          </article>
+          <article class="card" data-tilt>
+            <span class="chip">SQL • Sequelize • PostgreSQL</span>
+            <h3>Modelado de datos</h3>
+            <p>Relaciones, migraciones, DBMS, seeds, data pipeliens, ETL y consultas avanzadas.</p>
+          </article>
+          <article class="card" data-tilt>
+            <span class="chip">CI/CD • Render • GitLab</span>
+            <h3>Despliegue y monitoreo</h3>
+            <p>Automatización de despliegues, logs, testing, métricas, alertas y saneamiento de errores.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="wrap">
+        <h2 class="section-title">Proyectos</h2>
+        <p class="section-sub">Algunas cosas que hice recientemente.</p>
+        <div class="grid projects">
+          <article class="card project" data-tilt>
+            <figure>
+              <img src="https://picsum.photos/600/400?random=1" alt="Proyecto 1" loading="lazy"/>
+              <figcaption>
+                <h3>API de Tareas</h3>
+                <p>API REST con Express + Sequelize + JWT + Testing. <a href="#">Ver repo</a></p>
+              </figcaption>
+            </figure>
+          </article>
+          <article class="card project" data-tilt>
+            <figure>
+              <img src="https://picsum.photos/600/400?random=2" alt="Proyecto 2" loading="lazy"/>
+              <figcaption>
+                <h3>Servicio de Email</h3>
+                <p>Microservicio Node para notificaciones, colas y plantillas. <a href="#">Ver repo</a></p>
+              </figcaption>
+            </figure>
+          </article>
+          <article class="card project" data-tilt>
+            <figure>
+              <img src="https://picsum.photos/600/400?random=3" alt="Proyecto 3" loading="lazy"/>
+              <figcaption>
+                <h3>Simulador de Fútbol</h3>
+                <p>Motor de simulación por ticks y API pública. <a href="#">Ver repo</a></p>
+              </figcaption>
+            </figure>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- STACK -->
+    <section id="stack">
+      <div class="wrap">
+        <h2 class="section-title">Skillset</h2>
+        <p class="section-sub">Tecnologías que uso en el día a día.</p>
+        <div class="stack-columns">
+          <!-- Lenguajes -->
+          <div class="stack-col">
+            <h3 class="stack-heading">Lenguajes</h3>
+            <div class="stack-list-group">
+              <div class="stack-list">
+                <div class="stack-item js"><i class="devicon-javascript-plain"></i><span>JavaScript</span></div>
+                <div class="stack-item html"><i class="devicon-html5-plain"></i><span>HTML</span></div>
+                <div class="stack-item css"><i class="devicon-css3-plain"></i><span>CSS</span></div>
+              </div>
+              <div class="stack-list">
+                <div class="stack-item sql"><i class="devicon-sqlite-plain"></i><span>SQL</span></div>
+                <div class="stack-item python"><i class="devicon-python-plain"></i><span>Python</span></div>
+              </div>
+            </div>
+          </div>
+          <!-- Frameworks & Librerías -->
+          <div class="stack-col">
+            <h3 class="stack-heading">Frameworks &amp; Librerías</h3>
+            <div class="stack-list-group">
+              <div class="stack-list">
+                <div class="stack-item nodejs"><i class="devicon-nodejs-plain"></i><span>Node.js</span></div>
+                <div class="stack-item express"><i class="devicon-express-original"></i><span>Express</span></div>
+                <div class="stack-item jquery"><i class="devicon-jquery-plain"></i><span>jQuery</span></div>
+                <div class="stack-item tailwindcss"><i class="devicon-tailwindcss-plain"></i><span>TailwindCSS</span></div>
+              </div>
+              <div class="stack-list">
+                <div class="stack-item gsap"><i class="devicon-gsap-plain"></i><span>GSAP</span></div>
+                <div class="stack-item bootstrap"><i class="devicon-bootstrap-plain"></i><span>Bootstrap</span></div>
+                <div class="stack-item sequelize"><i class="devicon-sequelize-plain"></i><span>Sequelize (ORM)</span></div>
+                <div class="stack-item django"><i class="devicon-django-plain"></i><span>Django</span></div>
+              </div>
+            </div>
+          </div>
+          <!-- Herramientas & Infra -->
+          <div class="stack-col">
+            <h3 class="stack-heading">Herramientas &amp; Infra</h3>
+            <div class="stack-list-group">
+              <div class="stack-list">
+                <div class="stack-item postgresql"><i class="devicon-postgresql-plain"></i><span>PostgreSQL</span></div>
+                <div class="stack-item docker"><i class="devicon-docker-plain"></i><span>Docker</span></div>
+                <div class="stack-item github"><i class="devicon-github-plain"></i><span>GitHub</span></div>
+                <div class="stack-item gitlab"><i class="devicon-gitlab-plain"></i><span>GitLab</span></div>
+              </div>
+              <div class="stack-list">
+                <div class="stack-item render"><i class="devicon-cloudfoundry-plain"></i><span>Render</span></div>
+                <div class="stack-item postman"><i class="devicon-api-plain"></i><span>Postman</span></div>
+                <div class="stack-item git"><i class="devicon-git-plain"></i><span>Git</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="wrap">
+        <h2 class="section-title">Contacto</h2>
+        <p class="section-sub">¿Tenés una idea? Charlemos.</p>
+        <form id="contact-form" action="https://formspree.io/f/xzzvledn" method="POST">
+          <div>
+            <label for="name">Nombre</label>
+            <input id="name" name="name" type="text" placeholder="Tu nombre" required />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="tu@mail.com" required />
+          </div>
+          <div>
+            <label for="msg">Mensaje</label>
+            <textarea id="msg" name="message" placeholder="Contame un poco del proyecto..." required></textarea>
+          </div>
+          <button class="btn primary" type="submit">Enviar</button>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Agustin Azorin — Hecho con HTML, CSS y JS.
+    </footer>
+  </main>
+
+  <!-- Libs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
+  <script src="./script.js" defer></script>
 </body>
 </html>
