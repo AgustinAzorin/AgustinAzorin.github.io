@@ -123,9 +123,9 @@ section{min-height:100svh; padding:96px 24px 48px; display:grid; align-content:c
 .stack-item.python:hover,
 .stack-item.python:hover i { color: #3776ab; }
 .stack-item.nodejs:hover,
-.stack-item.nodejs:hover i { color: #3c873a; }
+.stack-item.nodejs:hover i { color: #369233; }
 .stack-item.express:hover,
-.stack-item.express:hover i { color: #444; }
+.stack-item.express:hover i { color: #adacac; }
 .stack-item.jquery:hover,
 .stack-item.jquery:hover i { color: #0868ac; }
 .stack-item.tailwindcss:hover,
