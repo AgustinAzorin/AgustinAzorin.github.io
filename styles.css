@@ -140,6 +140,8 @@ section{min-height:100svh; padding:96px 24px 48px; display:grid; align-content:c
 .stack-item.postgresql:hover i { color: #336791; }
 .stack-item.docker:hover,
 .stack-item.docker:hover i { color: #2496ed; }
+.stack-item.django:hover,
+.stack-item.django:hover i { color: #168b12; }
 .stack-item.github:hover,
 .stack-item.github:hover i { color: #fcfcfc; }
 .stack-item.gitlab:hover,
