@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tarjeta para Mel</title>
-  <meta name="description" content="Tarjeta de cumpleaños virtual" />
   <style>
     :root{
       --bg: #0b0d10;
@@ -24,323 +23,69 @@
       --paper-in:#f8fafc;
       --shadow: rgba(0,0,0,.12);
     }
-    *{box-sizing:border-box}
     body{
-      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      background: radial-gradient(1200px 800px at 50% -10%, rgba(139,92,246,.15), transparent 60%), var(--bg);
-      color: var(--fg); min-height:100svh; display:flex; align-items:center; justify-content:center;
+      margin:0; font-family:sans-serif;
+      background: var(--bg); color: var(--fg);
+      display:flex; align-items:center; justify-content:center; min-height:100vh;
     }
-    .app{width:min(1100px, 100%); padding:24px}
-    .topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px}
-    .topbar h1{font-size:16px; font-weight:600; letter-spacing:.3px; margin:0; color:var(--muted)}
-    .btn{
-      appearance:none; border:0; border-radius:14px; padding:10px 14px; font-weight:600; cursor:pointer;
-      background:var(--paper); color:var(--fg); box-shadow: 0 6px 16px var(--shadow); transition:.2s transform,.2s filter,.2s background;
-    }
-    .btn:hover{transform:translateY(-1px)}
-    .btn.primary{background:linear-gradient(135deg, var(--accent), #5b21b6); color:white}
-    .center{display:flex; align-items:center; justify-content:center}
-
-    /* Landing (elige tema) */
-    .landing{
-      position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
-      background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.55)), var(--bg);
-      backdrop-filter: blur(4px);
-      z-index:50; padding:24px;
-    }
-    .card-landing{
-      width:min(520px, 92%); background:var(--paper); color:var(--fg); border-radius:20px; padding:20px;
-      box-shadow: 0 20px 60px var(--shadow);
-    }
-    .card-landing h2{margin:8px 0 6px; font-size:20px}
-    .card-landing p{margin:0 0 14px; color:var(--muted)}
-    .landing .row{display:flex; gap:12px; margin-top:8px}
-    .landing .btn{flex:1}
-
-    /* Tarjeta (portada) */
-    .scene{
-      perspective: 1400px; display:grid; place-items:center;
-    }
-    .greeting-card{
-      width:min(780px, 94%); height: clamp(420px, 60svh, 560px);
-      position:relative; transform-style: preserve-3d;
-    }
-    .cover, .inside{
-      position:absolute; inset:0; border-radius:22px; box-shadow: 0 24px 60px var(--shadow);
-    }
+    .app{width:min(900px,100%); padding:20px}
+    .topbar{display:flex; justify-content:space-between; margin-bottom:20px}
+    .btn{border:0; border-radius:10px; padding:8px 14px; cursor:pointer; font-weight:600}
+    .btn{background:var(--paper); color:var(--fg)}
+    .scene{perspective:1400px; display:grid; place-items:center}
+    .greeting-card{width:min(700px,90%); height:450px; position:relative}
+    .cover, .inside{position:absolute; inset:0; border-radius:18px; box-shadow:0 20px 40px var(--shadow)}
     .cover{
-      background:
-        radial-gradient(900px 500px at 10% -20%, rgba(139,92,246,.25), transparent 60%),
-        linear-gradient(165deg, #0b1020, var(--paper));
-      transform-origin: left center;
-      transform: rotateY(0deg);
-      transition: transform 900ms cubic-bezier(.22,1,.36,1);
-      display:flex; align-items:center; justify-content:center; padding:24px;
+      background:linear-gradient(165deg,#0b1020,var(--paper));
+      display:flex; align-items:center; justify-content:center;
+      transform-origin:left center; transition:transform .9s cubic-bezier(.22,1,.36,1);
+      cursor:pointer;
     }
-    .inside{
-      background: linear-gradient(180deg, var(--paper-in), var(--paper));
-      padding:24px; display:flex; gap:20px; flex-direction:column; justify-content:space-between;
-    }
-    .cover-content{
-      border:2px dashed rgba(255,255,255,.18); padding:24px; border-radius:18px; width:100%; height:100%;
-      display:grid; place-items:center; text-align:center;
-    }
-    .cover h2{font-size: clamp(28px, 5vw, 46px); margin:0}
-    .cover p{margin:6px 0 0; color:#d6d9e0}
-    .tap{
-      position:absolute; bottom:14px; right:18px; font-size:13px; color:#d1d5db; opacity:.9;
-      display:flex; gap:8px; align-items:center;
-    }
-    .tap .dot{width:8px; height:8px; border-radius:50%; background:#c4b5fd; animation: blink 1.6s infinite}
-    @keyframes blink{50%{opacity:.25}}
-    .open .cover{transform: rotateY(-178deg)}
-    .open .cover:after{content:""; position:absolute; inset:0; border-radius:22px; background:linear-gradient(90deg, rgba(0,0,0,.0), rgba(0,0,0,.35));}
-
-    /* Interior */
-    .inner{
-      display:grid; grid-template-columns: 1.2fr 1fr; gap:22px; height:100%;
-    }
-    @media (max-width: 820px){
-      .inner{grid-template-columns: 1fr; overflow:auto}
-    }
-    .message{
-      background:rgba(0,0,0,.05); border:1px solid rgba(255,255,255,.06); border-radius:18px; padding:18px; overflow:auto;
-    }
-    html.light .message{background:rgba(0,0,0,.03); border:1px solid rgba(0,0,0,.06)}
-    .message h3{margin:0 0 8px; font-size: clamp(20px, 3.4vw, 26px)}
-    .message p{margin:0; line-height:1.6; color:var(--fg)}
-    .gallery{
-      border-radius:18px; overflow:hidden; position:relative; background:rgba(0,0,0,.06);
-      display:grid; grid-template-rows: 1fr auto; height:100%;
-    }
-    .viewport{position:relative; overflow:hidden}
-    .strip{display:flex; transition: transform .45s ease}
-    .strip img{width:100%; height:320px; object-fit:cover; flex:0 0 100%}
-    .controls{display:flex; gap:8px; padding:10px; align-items:center; justify-content:space-between; background:rgba(0,0,0,.06)}
-    .pills{display:flex; gap:6px}
-    .pill{width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.25)}
-    html.light .pill{background:rgba(0,0,0,.2)}
-    .pill.active{background:var(--accent)}
-    .arrow{border:0; background:transparent; color:var(--fg); font-size:20px; cursor:pointer; padding:6px 8px}
-    .credits{font-size:12px; color:var(--muted); text-align:center; margin-top:14px}
-
-    /* Confetti */
-    .confetti{position:fixed; inset:0; pointer-events:none; overflow:hidden}
-    .piece{
-      position:absolute; width:8px; height:12px; border-radius:2px; opacity:.95;
-      animation: fall linear forwards;
-    }
-    @keyframes fall{
-      to {transform: translateY(110vh) rotate(720deg)}
-    }
+    .cover h2{font-size:40px; margin:0}
+    .open .cover{transform:rotateY(-178deg)}
+    .inside{background:linear-gradient(180deg,var(--paper-in),var(--paper)); padding:20px}
+    .message{background:rgba(255,255,255,.05); padding:20px; border-radius:14px}
   </style>
 </head>
 <body>
   <div class="app">
     <div class="topbar">
-      <h1>🎂 Tarjeta de Cumple</h1>
-      <div class="actions">
-        <button class="btn" id="toggleThemeBtn" title="Cambiar tema">🌓 Tema</button>
-      </div>
+      <h1>🎂 Tarjeta</h1>
+      <button class="btn" id="toggleThemeBtn">🌓 Tema</button>
     </div>
 
     <div class="scene">
       <div class="greeting-card" id="card">
-        <div class="cover" id="cover" role="button" aria-label="Abrir tarjeta" tabindex="0">
-          <div class="cover-content">
-            <div>
-              <h2>Para Mel 💜</h2>
-              <p>Tocá para abrir</p>
-            </div>
-          </div>
-          <div class="tap"><span class="dot"></span> tocar para abrir</div>
+        <div class="cover" id="cover">
+          <h2>Para Mel 💜</h2>
         </div>
-
         <div class="inside">
-          <div class="inner">
-            <section class="message" aria-live="polite">
-              <h3>¡Feliz cumple, Mel! 🎉</h3>
-              <p id="customText">
-                Deseo que este año te traiga proyectos lindos, risas hasta tarde y muchos mates compartidos.
-                Gracias por estar siempre. 💫
-              </p>
-            </section>
-
-            <section class="gallery">
-              <div class="viewport">
-                <div class="strip" id="strip"></div>
-              </div>
-              <div class="controls">
-                <button class="arrow" id="prev" aria-label="Anterior">◀</button>
-                <div class="pills" id="pills"></div>
-                <button class="arrow" id="next" aria-label="Siguiente">▶</button>
-              </div>
-            </section>
+          <div class="message">
+            <h3>¡Feliz cumple, Mel! 🎉</h3>
+            <p>
+              Deseo que este año te traiga proyectos lindos, risas hasta tarde y muchos mates compartidos.
+              Gracias por estar siempre 💫
+            </p>
           </div>
-          <div class="credits">Hecho con ♥ por vos — <span id="year"></span></div>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- Landing: elegir tema -->
-  <div class="landing" id="landing" hidden>
-    <div class="card-landing">
-      <h2>Elegí un tema</h2>
-      <p>Podés cambiarlo cuando quieras. Se guarda para la próxima visita.</p>
-      <div class="row">
-        <button class="btn" id="chooseLight">☀️ Claro</button>
-        <button class="btn primary" id="chooseDark">🌙 Oscuro</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Confetti -->
-  <div class="confetti" id="confetti"></div>
 
   <script>
-    // ========== CONFIGURA TUS IMÁGENES AQUÍ ==========
-    // Colocá tus fotos en /assets/photos/ y listalas acá:
-    const IMAGES = [
-      "foto1.jpg",
-      "foto2.jpg",
-      "foto3.jpg"
-    ];
-    const IMAGE_PATH = "assets/photos/";
-
-    // ========== Tema ==========
     const root = document.documentElement;
-    const savedTheme = localStorage.getItem("theme");
-    const landing = document.getElementById("landing");
+    const saved = localStorage.getItem("theme");
+    if(saved==="light") root.classList.add("light"); // default es oscuro
 
-    function applyTheme(theme){
-      if(theme === "light"){
-        root.classList.add("light");
-      } else {
-        root.classList.remove("light");
-      }
-      localStorage.setItem("theme", theme);
-    }
-
-    (function initTheme(){
-      if(savedTheme){
-        applyTheme(savedTheme);
-      } else {
-        landing.hidden = false;
-      }
-    })();
-
-    document.getElementById("chooseLight").onclick = () => { applyTheme("light"); landing.style.display = "none"; };
-    document.getElementById("chooseDark").onclick  = () => { applyTheme("dark");  landing.style.display = "none";  };
-    document.getElementById("toggleThemeBtn").onclick = () => {
-      const t = root.classList.contains("light") ? "dark" : "light";
-      applyTheme(t);
+    document.getElementById("toggleThemeBtn").onclick = ()=>{
+      root.classList.toggle("light");
+      localStorage.setItem("theme", root.classList.contains("light") ? "light":"dark");
     };
 
-    // ========== Tarjeta (abrir) ==========
-    const card  = document.getElementById("card");
-    const cover = document.getElementById("cover");
-    const confettiLayer = document.getElementById("confetti");
-
-    function launchConfetti(){
-      const count = 80;
-      confettiLayer.innerHTML = "";
-      for(let i=0;i<count;i++){
-        const el = document.createElement("div");
-        el.className = "piece";
-        const left = Math.random()*100;
-        const delay = Math.random()*0.8;
-        const dur = 1.6 + Math.random()*1.2;
-        const w = 6 + Math.random()*8;
-        const h = 8 + Math.random()*14;
-        el.style.left = left + "vw";
-        el.style.top = "-10vh";
-        el.style.width = w+"px";
-        el.style.height = h+"px";
-        el.style.background = `hsl(${Math.random()*360}, 80%, 60%)`;
-        el.style.animationDuration = dur+"s";
-        el.style.animationDelay = delay+"s";
-        confettiLayer.appendChild(el);
-        setTimeout(()=> el.remove(), (delay+dur)*1000 + 500);
-      }
-    }
-
-    function openCard(){
-      if(!card.classList.contains("open")){
-        card.classList.add("open");
-        launchConfetti();
-      }
-    }
-
-    cover.addEventListener("click", openCard);
-    cover.addEventListener("keydown", (e)=>{ if(e.key==="Enter" || e.key===" "){ e.preventDefault(); openCard(); } });
-
-    // ========== Galería ==========
-    const strip = document.getElementById("strip");
-    const pills = document.getElementById("pills");
-    const btnPrev = document.getElementById("prev");
-    const btnNext = document.getElementById("next");
-    const yearEl = document.getElementById("year");
-    yearEl.textContent = new Date().getFullYear();
-
-    let idx = 0;
-
-    function renderGallery(){
-      strip.innerHTML = "";
-      pills.innerHTML = "";
-      IMAGES.forEach((name, i)=>{
-        const img = document.createElement("img");
-        img.loading = "lazy";
-        img.alt = `Foto ${i+1}`;
-        img.src = IMAGE_PATH + name;
-        strip.appendChild(img);
-
-        const dot = document.createElement("div");
-        dot.className = "pill" + (i===idx ? " active" : "");
-        dot.onclick = ()=> goTo(i);
-        pills.appendChild(dot);
-      });
-      updatePos();
-    }
-
-    function updatePos(){
-      strip.style.transform = `translateX(-${idx*100}%)`;
-      [...pills.children].forEach((d, i)=> d.classList.toggle("active", i===idx));
-    }
-
-    function goTo(i){
-      idx = (i + IMAGES.length) % IMAGES.length;
-      updatePos();
-    }
-
-    btnPrev.onclick = ()=> goTo(idx-1);
-    btnNext.onclick = ()=> goTo(idx+1);
-    window.addEventListener("keydown", (e)=>{
-      if(e.key==="ArrowLeft") goTo(idx-1);
-      if(e.key==="ArrowRight") goTo(idx+1);
-    });
-
-    // Deslizar en móvil
-    let startX = null;
-    strip.addEventListener("touchstart", (e)=> startX = e.touches[0].clientX, {passive:true});
-    strip.addEventListener("touchmove", (e)=>{
-      if(startX===null) return;
-      const dx = e.touches[0].clientX - startX;
-      if(Math.abs(dx) > 40){
-        dx>0 ? goTo(idx-1) : goTo(idx+1);
-        startX = null;
-      }
-    }, {passive:true});
-
-    renderGallery();
-
-    // Personalización rápida desde querystring (opcional)
-    // Ej: ?para=Mel&mensaje=Feliz%20cumple%20!!!
-    const params = new URLSearchParams(location.search);
-    const para = params.get("para");
-    const mensaje = params.get("mensaje");
-    if(para) document.querySelector(".cover h2").textContent = `Para ${para} 💜`;
-    if(mensaje) document.getElementById("customText").textContent = mensaje;
+    const card=document.getElementById("card");
+    const cover=document.getElementById("cover");
+    cover.onclick=()=> card.classList.toggle("open");
   </script>
 </body>
-            </html>
+</html>
+
