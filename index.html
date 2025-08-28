@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tarjeta para Mel</title>
+  <meta name="description" content="Tarjeta de cumpleaños virtual" />
   <style>
     :root{
       --bg: #0b0d10;
@@ -23,69 +24,118 @@
       --paper-in:#f8fafc;
       --shadow: rgba(0,0,0,.12);
     }
+    *{box-sizing:border-box}
     body{
-      margin:0; font-family:sans-serif;
-      background: var(--bg); color: var(--fg);
-      display:flex; align-items:center; justify-content:center; min-height:100vh;
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 800px at 50% -10%, rgba(139,92,246,.15), transparent 60%), var(--bg);
+      color: var(--fg); min-height:100svh; display:flex; align-items:center; justify-content:center;
     }
-    .app{width:min(900px,100%); padding:20px}
-    .topbar{display:flex; justify-content:space-between; margin-bottom:20px}
-    .btn{border:0; border-radius:10px; padding:8px 14px; cursor:pointer; font-weight:600}
-    .btn{background:var(--paper); color:var(--fg)}
-    .scene{perspective:1400px; display:grid; place-items:center}
-    .greeting-card{width:min(700px,90%); height:450px; position:relative}
-    .cover, .inside{position:absolute; inset:0; border-radius:18px; box-shadow:0 20px 40px var(--shadow)}
+    .app{width:min(1100px, 100%); padding:24px}
+    .topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px}
+    .topbar h1{font-size:16px; font-weight:600; letter-spacing:.3px; margin:0; color:var(--muted)}
+    .btn{
+      appearance:none; border:0; border-radius:14px; padding:10px 14px; font-weight:600; cursor:pointer;
+      background:var(--paper); color:var(--fg); box-shadow: 0 6px 16px var(--shadow); transition:.2s transform,.2s filter,.2s background;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{background:linear-gradient(135deg, var(--accent), #5b21b6); color:white}
+
+    /* Escena y tarjeta */
+    .scene{perspective: 1400px; display:grid; place-items:center}
+    .greeting-card{
+      width:min(780px, 94%); height: clamp(420px, 60svh, 560px);
+      position:relative; transform-style: preserve-3d; /* clave para 3D */
+    }
+    .cover, .inside{
+      position:absolute; inset:0; border-radius:22px; box-shadow: 0 24px 60px var(--shadow);
+      backface-visibility: hidden; /* evita ver el dorso */
+    }
+
+    /* Portada */
     .cover{
-      background:linear-gradient(165deg,#0b1020,var(--paper));
-      display:flex; align-items:center; justify-content:center;
-      transform-origin:left center; transition:transform .9s cubic-bezier(.22,1,.36,1);
-      cursor:pointer;
+      z-index:2; /* portada arriba */
+      background:
+        radial-gradient(900px 500px at 10% -20%, rgba(139,92,246,.25), transparent 60%),
+        linear-gradient(165deg, #0b1020, var(--paper));
+      transform-origin: left center; /* abre como libro desde la izquierda */
+      transform: rotateY(0deg);
+      transition: transform 900ms cubic-bezier(.22,1,.36,1);
+      display:flex; align-items:center; justify-content:center; padding:24px; cursor:pointer;
     }
-    .cover h2{font-size:40px; margin:0}
-    .open .cover{transform:rotateY(-178deg)}
-    .inside{background:linear-gradient(180deg,var(--paper-in),var(--paper)); padding:20px}
-    .message{background:rgba(255,255,255,.05); padding:20px; border-radius:14px}
+    .cover h2{font-size: clamp(28px, 5vw, 46px); margin:0}
+    .cover p{margin:6px 0 0; color:#d6d9e0}
+
+    /* Interior */
+    .inside{
+      z-index:1; /* interior abajo hasta que se abre */
+      background: linear-gradient(180deg, var(--paper-in), var(--paper));
+      padding:24px; display:flex; gap:20px; flex-direction:column; justify-content:space-between;
+    }
+    .message{
+      background:rgba(0,0,0,.05); border:1px solid rgba(255,255,255,.06); border-radius:18px; padding:18px;
+    }
+    html.light .message{background:rgba(0,0,0,.03); border:1px solid rgba(0,0,0,.06)}
+    .message h3{margin:0 0 8px; font-size: clamp(20px, 3.4vw, 26px)}
+    .message p{margin:0; line-height:1.6; color:var(--fg)}
+    .credits{font-size:12px; color:var(--muted); text-align:center; margin-top:14px}
+
+    /* Estado abierto */
+    .open .cover{transform: rotateY(-178deg)}
+    .open .cover:after{content:""; position:absolute; inset:0; border-radius:22px; background:linear-gradient(90deg, rgba(0,0,0,.0), rgba(0,0,0,.35));}
   </style>
 </head>
 <body>
   <div class="app">
     <div class="topbar">
       <h1>🎂 Tarjeta</h1>
-      <button class="btn" id="toggleThemeBtn">🌓 Tema</button>
+      <button class="btn" id="toggleThemeBtn" title="Cambiar tema">🌓 Tema</button>
     </div>
 
     <div class="scene">
       <div class="greeting-card" id="card">
-        <div class="cover" id="cover">
-          <h2>Para Mel 💜</h2>
+        <!-- Portada -->
+        <div class="cover" id="cover" role="button" aria-label="Abrir tarjeta" tabindex="0">
+          <div class="cover-content" style="text-align:center">
+            <h2>Para Mel 💜</h2>
+            <p>Tocá para abrir</p>
+          </div>
         </div>
+
+        <!-- Interior -->
         <div class="inside">
-          <div class="message">
+          <div class="message" aria-live="polite">
             <h3>¡Feliz cumple, Mel! 🎉</h3>
-            <p>
+            <p id="customText">
               Deseo que este año te traiga proyectos lindos, risas hasta tarde y muchos mates compartidos.
-              Gracias por estar siempre 💫
+              Gracias por estar siempre. 💫
             </p>
           </div>
+          <div class="credits">Hecho con ♥ — <span id="year"></span></div>
         </div>
       </div>
     </div>
   </div>
 
   <script>
+    // ====== Tema (oscuro por defecto, recuerda preferencia) ======
     const root = document.documentElement;
-    const saved = localStorage.getItem("theme");
-    if(saved==="light") root.classList.add("light"); // default es oscuro
+    const savedTheme = localStorage.getItem("theme");
+    if(savedTheme === "light") root.classList.add("light");
 
-    document.getElementById("toggleThemeBtn").onclick = ()=>{
-      root.classList.toggle("light");
-      localStorage.setItem("theme", root.classList.contains("light") ? "light":"dark");
+    document.getElementById("toggleThemeBtn").onclick = () => {
+      const isLight = root.classList.toggle("light");
+      localStorage.setItem("theme", isLight ? "light" : "dark");
     };
 
-    const card=document.getElementById("card");
-    const cover=document.getElementById("cover");
-    cover.onclick=()=> card.classList.toggle("open");
+    // ====== Tarjeta (abrir/cerrar) ======
+    const card  = document.getElementById("card");
+    const cover = document.getElementById("cover");
+    function toggleCard(){ card.classList.toggle("open"); }
+    cover.addEventListener("click", toggleCard);
+    cover.addEventListener("keydown", (e)=>{ if(e.key==="Enter" || e.key===" "){ e.preventDefault(); toggleCard(); } });
+
+    // Año en el pie
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
-
