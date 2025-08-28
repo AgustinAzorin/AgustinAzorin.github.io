@@ -230,8 +230,8 @@
       }
     })();
 
-    document.getElementById("chooseLight").onclick = () => { applyTheme("light"); landing.hidden = true; };
-    document.getElementById("chooseDark").onclick  = () => { applyTheme("dark");  landing.hidden = true;  };
+    document.getElementById("chooseLight").onclick = () => { applyTheme("light"); landing.style.display = "none"; };
+    document.getElementById("chooseDark").onclick  = () => { applyTheme("dark");  landing.style.display = "none";  };
     document.getElementById("toggleThemeBtn").onclick = () => {
       const t = root.classList.contains("light") ? "dark" : "light";
       applyTheme(t);
