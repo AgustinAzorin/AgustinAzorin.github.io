@@ -82,6 +82,16 @@
     /* Estado abierto */
     .open .cover{transform: rotateY(-178deg)}
     .open .cover:after{content:""; position:absolute; inset:0; border-radius:22px; background:linear-gradient(90deg, rgba(0,0,0,.0), rgba(0,0,0,.35));}
+
+    /* Confetti */
+    .confetti{position:fixed; inset:0; pointer-events:none; overflow:hidden}
+    .piece{
+      position:absolute; width:8px; height:12px; border-radius:2px; opacity:.95;
+      animation: fall linear forwards;
+    }
+    @keyframes fall{
+      to {transform: translateY(110vh) rotate(720deg)}
+    }
   </style>
 </head>
 <body>
@@ -116,6 +126,9 @@
     </div>
   </div>
 
+  <!-- Confetti -->
+  <div class="confetti" id="confetti"></div>
+
   <script>
     // ====== Tema (oscuro por defecto, recuerda preferencia) ======
     const root = document.documentElement;
@@ -130,7 +143,35 @@
     // ====== Tarjeta (abrir/cerrar) ======
     const card  = document.getElementById("card");
     const cover = document.getElementById("cover");
-    function toggleCard(){ card.classList.toggle("open"); }
+    const confettiLayer = document.getElementById("confetti");
+
+    function launchConfetti(){
+      const count = 80;
+      confettiLayer.innerHTML = "";
+      for(let i=0;i<count;i++){
+        const el = document.createElement("div");
+        el.className = "piece";
+        const left = Math.random()*100;
+        const delay = Math.random()*0.8;
+        const dur = 1.6 + Math.random()*1.2;
+        const w = 6 + Math.random()*8;
+        const h = 8 + Math.random()*14;
+        el.style.left = left + "vw";
+        el.style.top = "-10vh";
+        el.style.width = w+"px";
+        el.style.height = h+"px";
+        el.style.background = `hsl(${Math.random()*360}, 80%, 60%)`;
+        el.style.animationDuration = dur+"s";
+        el.style.animationDelay = delay+"s";
+        confettiLayer.appendChild(el);
+        setTimeout(()=> el.remove(), (delay+dur)*1000 + 500);
+      }
+    }
+
+    function toggleCard(){
+      const isOpen = card.classList.toggle("open");
+      if(isOpen) launchConfetti();
+    }
     cover.addEventListener("click", toggleCard);
     cover.addEventListener("keydown", (e)=>{ if(e.key==="Enter" || e.key===" "){ e.preventDefault(); toggleCard(); } });
 
