@@ -1,291 +1,194 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tarjeta para Mel</title>
-  <meta name="description" content="Tarjeta de cumpleaños virtual" />
-  <style>
-    :root{
-      --bg: #0b0d10;
-      --fg: #e8eef5;
-      --muted:#9aa6b2;
-      --accent:#8b5cf6;
-      --paper:#11141a;
-      --paper-in:#0f1724;
-      --shadow: rgba(0,0,0,.35);
-    }
-    html.light{
-      --bg:#f6f7fb;
-      --fg:#0f172a;
-      --muted:#5b6470;
-      --accent:#7c3aed;
-      --paper:#ffffff;
-      --paper-in:#f8fafc;
-      --shadow: rgba(0,0,0,.12);
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      background: radial-gradient(1200px 800px at 50% -10%, rgba(139,92,246,.15), transparent 60%), var(--bg);
-      color: var(--fg); min-height:100svh; display:flex; align-items:center; justify-content:center;
-    }
-    .app{width:min(1100px, 100%); padding:24px}
-    .topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px}
-    .topbar h1{font-size:16px; font-weight:600; letter-spacing:.3px; margin:0; color:var(--muted)}
-    .btn{
-      appearance:none; border:0; border-radius:14px; padding:10px 14px; font-weight:600; cursor:pointer;
-      background:var(--paper); color:var(--fg); box-shadow: 0 6px 16px var(--shadow); transition:.2s transform,.2s filter,.2s background;
-    }
-    .btn:hover{transform:translateY(-1px)}
+  <title>Portfolio • Agustin Azorin</title>
+  <meta name="description" content="Portfolio de desarrollador backend. Proyectos, servicios, stack y contacto." />
 
-    /* Escena y tarjeta */
-    .scene{perspective: 1400px; display:grid; place-items:center}
-    .greeting-card{
-      width:min(940px, 96%); height: clamp(460px, 62svh, 580px);
-      position:relative; transform-style: preserve-3d;
-    }
-    .cover, .inside{
-      position:absolute; inset:0; border-radius:22px; box-shadow: 0 24px 60px var(--shadow);
-      backface-visibility: hidden;
-    }
+  <!-- Fuente -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css">
+  <link rel="stylesheet" href="./styles.css" />
+  <link href="./src/output.css" rel="stylesheet">
 
-    .cover{
-      z-index:2;
-      background:
-        radial-gradient(900px 500px at 10% -20%, rgba(139,92,246,.25), transparent 60%),
-        linear-gradient(165deg, #0b1020, var(--paper));
-      transform-origin: left center;
-      transform: rotateY(0deg);
-      transition: transform 900ms cubic-bezier(.22,1,.36,1);
-      display:flex; align-items:center; justify-content:center; padding:24px; cursor:pointer;
-    }
-    .cover h2{font-size: clamp(28px, 5vw, 46px); margin:0}
-    .cover p{margin:6px 0 0; color:#d6d9e0}
-
-    .inside{
-      z-index:1;
-      background: linear-gradient(180deg, var(--paper-in), var(--paper));
-      padding:24px; display:flex; flex-direction:column; justify-content:space-between;
-    }
-
-    /* Layout interior: mensaje a la izquierda + galería a la derecha */
-    .inner{display:grid; grid-template-columns: 1.2fr 1fr; gap:22px; height:100%}
-    @media (max-width: 860px){ .inner{grid-template-columns: 1fr; } }
-
-    .message{
-      background:rgba(0,0,0,.05); border:1px solid rgba(255,255,255,.06); border-radius:18px; padding:18px;
-      overflow:auto;
-    }
-    html.light .message{background:rgba(0,0,0,.03); border:1px solid rgba(0,0,0,.06)}
-    .message h3{margin:0 0 8px; font-size: clamp(20px, 3.4vw, 26px)}
-    .message p{margin:0; line-height:1.6; color:var(--fg)}
-
-    /* Galería */
-    .gallery{border-radius:18px; overflow:hidden; background:rgba(0,0,0,.06); display:grid; grid-template-rows: 1fr auto;}
-    .viewport{position:relative; overflow:hidden}
-    .strip{display:flex; transition: transform .45s ease}
-    .slide{flex:0 0 100%; display:grid; place-items:center; height:100%}
-    .slide img{width:100%; height:100%; object-fit:cover}
-    .text-slide{display:grid; place-items:center; padding:24px; text-align:center}
-    .text-slide h4{font-size: clamp(22px, 4.5vw, 34px); margin:0}
-    .controls{display:flex; gap:8px; padding:10px; align-items:center; justify-content:space-between; background:rgba(0,0,0,.06)}
-    .pills{display:flex; gap:6px}
-    .pill{width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.25)}
-    html.light .pill{background:rgba(0,0,0,.2)}
-    .pill.active{background:var(--accent)}
-    .arrow{border:0; background:transparent; color:var(--fg); font-size:20px; cursor:pointer; padding:6px 8px}
-
-    .credits{font-size:12px; color:var(--muted); text-align:center; margin-top:14px}
-
-    .open .cover{transform: rotateY(-178deg)}
-    .open .cover:after{content:""; position:absolute; inset:0; border-radius:22px; background:linear-gradient(90deg, rgba(0,0,0,.0), rgba(0,0,0,.35));}
-
-    /* Confetti */
-    .confetti{position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:9999}
-    .piece{
-      position:absolute; width:8px; height:12px; border-radius:2px; opacity:.95;
-      animation: fall linear forwards;
-    }
-    @keyframes fall{ to {transform: translateY(110vh) rotate(720deg)} }
-  </style>
 </head>
 <body>
-  <div class="app">
-    <div class="topbar">
-      <button class="btn" id="toggleThemeBtn" title="Cambiar tema">🌓 Tema</button>
+  <!-- NAV -->
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <div class="brand"><span class="dot" aria-hidden="true"></span> Agustin Azorin</div>
+      <nav aria-label="Principal">
+        <ul>
+          <li><a class="js-nav" href="#home">Home</a></li>
+          <li><a class="js-nav" href="#services">Servicios</a></li>
+          <li><a class="js-nav" href="#projects">Proyectos</a></li>
+          <li><a class="js-nav" href="#stack">Skillset</a></li>
+          <li><a class="js-nav" href="#contact">Contacto</a></li>
+        </ul>
+      </nav>
     </div>
+  </header>
 
-    <div class="scene">
-      <div class="greeting-card" id="card">
-        <div class="cover" id="cover" role="button" aria-label="Abrir tarjeta" tabindex="0">
-          <div class="cover-content" style="text-align:center">
-            <h2>Para Mel 💜</h2>
-            <p>Tocá para abrir</p>
+  <main id="home" class="hero">
+    <div class="wrap hero-grid">
+      <div class="reveal">
+        <p class="kicker">Backend • APIs • Microservicios</p>
+        <h1 class="title">Hola, soy <em>Agustin Azorin</em>.<br/> Backend Developer Junior.</h1>
+        <p class="lead">Me enfoco en el desarrollo backend, creando APIs y servicios que organizan información y automatizan procesos. Me interesa la arquitectura de sistemas, la gestión de datos y las integraciones que dan soporte a aplicaciones reales.</p>
+        <div class="cta">
+          <a class="btn primary" href="#projects">Ver proyectos</a>
+          <a class="btn" href="#contact">Contactarme</a>
+        </div>
+      </div>
+      <aside class="hero-card reveal" aria-label="Resumen">
+        <p><strong>Actualmente:</strong> diseñando APIs en Node.js + Express, modelando datos con SQL/Sequelize y desplegando en Render. Trabajo con JWT, testing y CI/CD.</p>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Servicios -->
+  <section id="services" class="section">
+    <div class="wrap">
+      <div class="section-header">
+        <h2 class="section-title">Servicios</h2>
+        <p class="section-sub">Lo que puedo hacer por tu producto.</p>
+      </div>
+
+      <div class="grid cols-3">
+        <article class="card reveal">
+          <span class="chip">API REST • Express • Node</span>
+          <h3>Diseño y desarrollo de APIs</h3>
+          <p>Endpoints limpios, manejo de errores, versionado, paginación, rate limiting y código sostenible.</p>
+        </article>
+        <article class="card reveal">
+          <span class="chip">Auth • JWT • Roles</span>
+          <h3>Autenticación y seguridad</h3>
+          <p>Registro/login, recuperación, permisos, hardening básico, pruebas y logging estructurado.</p>
+        </article>
+        <article class="card reveal">
+          <span class="chip">SQL • Sequelize • PostgreSQL</span>
+          <h3>Modelado de datos</h3>
+          <p>Relaciones, migraciones, seeds, consultas avanzadas y pipelines de datos (ETL).</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proyectos -->
+  <section id="projects" class="section">
+    <div class="wrap">
+      <div class="section-header">
+        <h2 class="section-title">Proyectos</h2>
+        <p class="section-sub">Algunas cosas que hice recientemente.</p>
+      </div>
+
+      <div class="grid cols-3">
+        <article class="card project reveal">
+          <figure>
+            <div class="thumb">600×400</div>
+            <figcaption>
+              <h3>API de Tareas</h3>
+              <p>API REST con Express + Sequelize + JWT + Testing. <a href="#">Ver repo</a></p>
+            </figcaption>
+          </figure>
+        </article>
+        <article class="card project reveal">
+          <figure>
+            <div class="thumb">600×400</div>
+            <figcaption>
+              <h3>Servicio de Email</h3>
+              <p>Microservicio Node para notificaciones, colas y plantillas. <a href="#">Ver repo</a></p>
+            </figcaption>
+          </figure>
+        </article>
+        <article class="card project reveal">
+          <figure>
+            <div class="thumb">600×400</div>
+            <figcaption>
+              <h3>Simulador de Fútbol</h3>
+              <p>Motor de simulación por ticks y API pública. <a href="#">Ver repo</a></p>
+            </figcaption>
+          </figure>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skillset -->
+  <section id="stack" class="section">
+    <div class="wrap">
+      <div class="section-header">
+        <h2 class="section-title">Skillset</h2>
+        <p class="section-sub">Tecnologías que uso en el día a día.</p>
+      </div>
+
+      <div class="stack-columns">
+        <div class="stack-col card reveal">
+          <h4>Lenguajes</h4>
+          <div class="stack-list">
+            <div class="stack-item js"><i class="devicon-javascript-plain"></i><span>JavaScript</span></div>
+            <div class="stack-item html"><i class="devicon-html5-plain"></i><span>HTML</span></div>
+            <div class="stack-item css"><i class="devicon-css3-plain"></i><span>CSS</span></div>
+            <div class="stack-item sql"><i class="devicon-sqlite-plain"></i><span>SQL</span></div>
+            <div class="stack-item python"><i class="devicon-python-plain"></i><span>Python</span></div>
           </div>
         </div>
-
-        <div class="inside">
-          <div class="inner">
-            <section class="message" aria-live="polite">
-              <h3>¡Feliz cumple, Mel! 🎉</h3>
-              <p id="customText">
-                Te deseo lo mejjor para este dia tan especial. Tengo la leve sospecha de que no lees mis mensajitos asi que voy a poner cualquier cosa como que me encantan los pitos, si a mi, a Agustin Azorin.
-                Gracias por estar siempre. 💫 Te Quiero mucho mel
-                <br>-Lopa
-              </p>
-            </section>
-
-            <section class="gallery">
-              <div class="viewport">
-                <div class="strip" id="strip"></div>
-              </div>
-              <div class="controls">
-                <button class="arrow" id="prev" aria-label="Anterior">◀</button>
-                <div class="pills" id="pills"></div>
-                <button class="arrow" id="next" aria-label="Siguiente">▶</button>
-              </div>
-            </section>
+        <div class="stack-col card reveal">
+          <h4>Frameworks & Librerías</h4>
+          <div class="stack-list">
+            <div class="stack-item nodejs"><i class="devicon-nodejs-plain"></i><span>Node.js</span></div>
+            <div class="stack-item express"><i class="devicon-express-original"></i><span>Express</span></div>
+            <div class="stack-item sequelize"><i class="devicon-sequelize-plain"></i><span>Sequelize (ORM)</span></div>
+            <div class="stack-item django"><i class="devicon-django-plain"></i><span>Django</span></div>
           </div>
-          <div class="credits">Hecho con ♥</div>
+        </div>
+        <div class="stack-col card reveal">
+          <h4>Herramientas & Infra</h4>
+          <div class="stack-list">
+            <div class="stack-item postgresql"><i class="devicon-postgresql-plain"></i><span>PostgreSQL</span></div>
+            <div class="stack-item docker"><i class="devicon-docker-plain"></i><span>Docker</span></div>
+            <div class="stack-item github"><i class="devicon-github-plain"></i><span>GitHub / GitLab</span></div>
+            <div class="stack-item cloudfoundry"><i class="devicon-cloudfoundry-plain"></i><span>Render</span></div>
+            <div class="stack-item postman"><i class="devicon-postman-plain"></i><span>Postman</span></div>
+            <div class="stack-item git"><i class="devicon-git-plain"></i><span>Git</span></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="confetti" id="confetti"></div>
+  <!-- Contacto -->
+  <section id="contact" class="section">
+    <div class="wrap">
+      <div class="section-header">
+        <h2 class="section-title">Contacto</h2>
+        <p class="section-sub">¿Tenés una idea? Charlemos.</p>
+      </div>
 
-  <script>
-    const root = document.documentElement;
-    const savedTheme = localStorage.getItem("theme");
-    if(savedTheme === "light") root.classList.add("light");
+      <form action="https://formspree.io/f/xzzvledn" method="POST" class="card reveal">
+        <div>
+          <label for="name">Nombre</label>
+          <input id="name" name="name" type="text" placeholder="Tu nombre" required />
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="tu@mail.com" required />
+        </div>
+        <div>
+          <label for="msg">Mensaje</label>
+          <textarea id="msg" name="message" placeholder="Contame un poco del proyecto..." required></textarea>
+        </div>
+        <button class="btn primary" type="submit">Enviar</button>
+      </form>
+    </div>
+  </section>
 
-    document.getElementById("toggleThemeBtn").onclick = () => {
-      const isLight = root.classList.toggle("light");
-      localStorage.setItem("theme", isLight ? "light" : "dark");
-    };
-
-    const card  = document.getElementById("card");
-    const cover = document.getElementById("cover");
-    const confettiLayer = document.getElementById("confetti");
-
-    function launchConfetti(){
-      const count = 80;
-      confettiLayer.innerHTML = "";
-      for(let i=0;i<count;i++){
-        const el = document.createElement("div");
-        el.className = "piece";
-        const left = Math.random()*100;
-        const delay = Math.random()*0.8;
-        const dur = 1.6 + Math.random()*1.2;
-        const w = 6 + Math.random()*8;
-        const h = 8 + Math.random()*14;
-        el.style.left = left + "vw";
-        el.style.top = "-10vh";
-        el.style.width = w+"px";
-        el.style.height = h+"px";
-        el.style.background = `hsl(${Math.random()*360}, 80%, 60%)`;
-        el.style.animationDuration = dur+"s";
-        el.style.animationDelay = delay+"s";
-        confettiLayer.appendChild(el);
-        setTimeout(()=> el.remove(), (delay+dur)*1000 + 500);
-      }
-    }
-
-    function toggleCard(){
-      const isOpen = card.classList.toggle("open");
-      if(isOpen) launchConfetti();
-    }
-    cover.addEventListener("click", toggleCard);
-    cover.addEventListener("keydown", (e)=>{ if(e.key==="Enter" || e.key===" "){ e.preventDefault(); toggleCard(); } });
-
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // ===== Galería (usa ./src/) =====
-    const IMAGES = ["foto1.jpg","foto2.jpg","foto3.jpg"]; // coloca tus archivos en ./src/
-    const IMAGE_PATH = "./src/";
-
-    // Sorpresa segura (texto + imagen final)
-    const SURPRISE_ENABLED = true;
-    const SURPRISE_TEXT = "Y ahora la foto de lo que mas te gusta en el mundo 😊"; // texto grande
-    const SURPRISE_IMAGE = "sorpresa.jpg"; // poné aquí una imagen linda/segura en ./src/
-
-    const strip = document.getElementById("strip");
-    const pills = document.getElementById("pills");
-    const btnPrev = document.getElementById("prev");
-    const btnNext = document.getElementById("next");
-
-    let idx = 0;
-
-    function renderGallery(){
-      strip.innerHTML = "";
-      pills.innerHTML = "";
-
-      // Si no hay imágenes, mostrar placeholder y salir
-      if(IMAGES.length === 0 && !SURPRISE_ENABLED){
-        const placeholder = document.createElement('div');
-        placeholder.className = 'text-slide slide';
-        placeholder.innerHTML = '<h4>Subí tus fotos a ./src/ para ver la galería</h4>';
-        strip.appendChild(placeholder);
-        btnPrev.disabled = true; btnNext.disabled = true;
-        return;
-      }
-
-      const total = IMAGES.length + (SURPRISE_ENABLED ? 2 : 0);
-
-      for(let i=0; i<total; i++){
-        if(SURPRISE_ENABLED && i === IMAGES.length){
-          // Slide de texto
-          const s = document.createElement('div');
-          s.className = 'text-slide slide';
-          s.innerHTML = `<h4>${SURPRISE_TEXT}</h4>`;
-          strip.appendChild(s);
-        } else if(SURPRISE_ENABLED && i === IMAGES.length + 1){
-          // Slide de imagen sorpresa
-          const s = document.createElement('div');
-          s.className = 'slide';
-          const img = document.createElement('img');
-          img.src = IMAGE_PATH + SURPRISE_IMAGE;
-          img.alt = 'Sorpresa';
-          s.appendChild(img);
-          strip.appendChild(s);
-        } else {
-          // Slides de fotos normales
-          const s = document.createElement('div');
-          s.className = 'slide';
-          const img = document.createElement('img');
-          img.src = IMAGE_PATH + IMAGES[i];
-          img.alt = `Foto ${i+1}`;
-          s.appendChild(img);
-          strip.appendChild(s);
-        }
-      }
-
-      // Píldoras de navegación
-      for(let i=0;i<total;i++){
-        const dot = document.createElement('div');
-        dot.className = 'pill' + (i===idx ? ' active' : '');
-        dot.onclick = ()=> goTo(i);
-        pills.appendChild(dot);
-      }
-
-      updatePos();
-    }
-
-    function updatePos(){
-      const slides = strip.children.length;
-      if(slides===0){ return; }
-      idx = (idx + slides) % slides; // seguridad
-      strip.style.transform = `translateX(-${idx*100}%)`;
-      [...pills.children].forEach((d, i)=> d.classList.toggle("active", i===idx));
-    }
-
-    function goTo(i){ idx = i; updatePos(); }
-
-    btnPrev.onclick = ()=> { idx--; updatePos(); };
-    btnNext.onclick = ()=> { idx++; updatePos(); };
-
-    renderGallery();
-  </script>
+  <footer>
+    © <span id="year"></span> Agustin Azorin — Hecho con HTML, CSS y JS (sin frameworks de animación).
+  </footer>
+  <script src="./script.js" defer></script>
 </body>
 </html>
