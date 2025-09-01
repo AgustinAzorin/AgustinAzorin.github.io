@@ -322,6 +322,7 @@ footer{ border-top: 1px solid var(--line); color: var(--muted); padding: 24px 0 
   justify-content: center;
   width: 28px;
   height: 28px;
+  line-height: 0;  
   border-radius: 999px;
   transition: transform 160ms ease, background-color 160ms ease;
   outline: none;
@@ -333,6 +334,7 @@ footer{ border-top: 1px solid var(--line); color: var(--muted); padding: 24px 0 
   fill: currentColor;
   color: var(--text-weak, #ffffff);
   transition: color 160ms ease, filter 160ms ease;
+  display: block; /* elimina espacio extra debajo del SVG */
 }
 
 .social-link:hover,
@@ -363,21 +365,23 @@ footer{ border-top: 1px solid var(--line); color: var(--muted); padding: 24px 0 
 }
 
 /* --- HERO CARD: AVATAR CIRCULAR --- */
-.hero-card {
-  display: grid;
-  place-items: center;
+.hero-card{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0;
 }
 
-.hero-card .avatar {
-  /* tamaño responsive pero manteniendo el círculo */
-  width: min(40vw, 320px);
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
+/* el avatar sin fondo y solo el borde circular */
+.hero-card .avatar{
+  background: transparent; /* elimina cualquier fondo */
   border-radius: 50%;
-  border: 3px solid rgba(0,0,0,0.08);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-  background: #f6f7f9; /* por si tarda en cargar */
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+  width: min(40vw, 320px);
+  border: 3px solid rgba(255,255,255,0.10); /* borde suave en dark */
 }
+
 
 /* Si tu grid del hero necesita un poco más de espacio para el aside: */
 .hero-grid {
