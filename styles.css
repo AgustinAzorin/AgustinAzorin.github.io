@@ -278,3 +278,112 @@ footer{ border-top: 1px solid var(--line); color: var(--muted); padding: 24px 0 
   color:#F05032;
   border-color:#F05032;
 }
+
+/* --- BRAND + SOCIALS --- */
+.nav .nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand .brand-text {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 10px; /* separa los íconos del nombre */
+  list-style: none;
+  padding: 0;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  transition: transform 160ms ease, background-color 160ms ease;
+  outline: none;
+}
+
+.social-link svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  color: var(--text-weak, #666);
+  transition: color 160ms ease, filter 160ms ease;
+}
+
+.social-link:hover,
+.social-link:focus-visible {
+  transform: translateY(-1px) scale(1.05);
+  background-color: rgba(0,0,0,0.06);
+}
+
+/* Colores por marca en hover */
+.social-link.linkedin:hover svg,
+.social-link.linkedin:focus-visible svg {
+  color: #0a66c2;
+}
+
+.social-link.github:hover svg,
+.social-link.github:focus-visible svg {
+  color: #000; /* o #24292f */
+}
+
+.social-link.instagram:hover svg,
+.social-link.instagram:focus-visible svg {
+  color: #e4405f; /* simulamos el gradiente con el color principal */
+}
+
+/* Accesibilidad: foco visible */
+.social-link:focus-visible {
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.4); /* azul translúcido */
+}
+
+/* --- HERO CARD: AVATAR CIRCULAR --- */
+.hero-card {
+  display: grid;
+  place-items: center;
+}
+
+.hero-card .avatar {
+  /* tamaño responsive pero manteniendo el círculo */
+  width: min(40vw, 320px);
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid rgba(0,0,0,0.08);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  background: #f6f7f9; /* por si tarda en cargar */
+}
+
+/* Si tu grid del hero necesita un poco más de espacio para el aside: */
+.hero-grid {
+  align-items: center;
+  gap: 32px;
+}
+
+/* Opcional: en pantallas chicas, que el avatar baje */
+@media (max-width: 820px) {
+  .nav .nav-inner {
+    gap: 12px;
+  }
+  .socials {
+    gap: 8px;
+  }
+  .hero-grid {
+    gap: 24px;
+  }
+}
