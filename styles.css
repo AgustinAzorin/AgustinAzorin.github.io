@@ -324,20 +324,32 @@ footer{ border-top: 1px solid var(--line); color: var(--muted); padding: 24px 0 
   height: 32px;
   border-radius: 50%;
   line-height: 0;              /* elimina el "baseline shift" */
+  color: #fff;                 /* ICONOS BLANCOS POR DEFECTO */
+  background: transparent;
 }
 
+/* Asegurar que el <svg> use el color actual como fill y ocupe el centro del contenedor */
 .social-link svg {
   width: 18px;
   height: 18px;
   display: block;              /* evita espacios fantasmas */
+  fill: currentColor;          /* hace que el path herede color desde .social-link */
+  transform: translate(-5px, -2px); /* desplaza un poco arriba/izquierda */
+  transition: transform 140ms ease, fill 140ms ease;
 }
 
-
+.github svg{
+  transform: translate(-7px, -2px);
+}
+.instagram svg{
+  transform: translate(-6px, -2px);
+}
 .social-link:hover,
 .social-link:focus-visible {
   transform: translateY(-1px) scale(1.05);
   background-color: rgba(0,0,0,0.06);
 }
+
 
 /* Colores por marca en hover */
 .social-link.linkedin:hover svg,
@@ -347,7 +359,7 @@ footer{ border-top: 1px solid var(--line); color: var(--muted); padding: 24px 0 
 
 .social-link.github:hover svg,
 .social-link.github:focus-visible svg {
-  color: #000; /* o #24292f */
+  color: #696969; /* o #24292f */
 }
 
 .social-link.instagram:hover svg,
