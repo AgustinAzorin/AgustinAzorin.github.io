@@ -1,232 +1,211 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Portfolio — Agustín Azorín</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Backend Developer</title>
+    <link rel="stylesheet" href="css/styles.css">
 
-  <!-- Tipografía monoespaciada (preferida) -->
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="/css/styles.css">
-  <meta name="description" content="Desarrollador full-stack orientado al backend — APIs mantenibles, datos eficientes y arquitecturas escalables.">
-  <style>html{scroll-behavior:smooth}</style>
+    <!-- Tipografía monoespaciada -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
-<body class="dark">
+<body>
 
-  <!-- NAV -->
-  <header class="nav-wrapper">
-    <nav class="nav container">
-      <a class="brand" href="#sobre">Agustín Azorín</a>
+    <!-- Barra de navegación -->
+    <header>
+        <nav class="navbar">
+            <h1 class="logo">AGUS.dev</h1>
+            <ul class="nav-links">
+                <li><a href="#about">Sobre mí</a></li>
+                <li><a href="#roles">Roles</a></li>
+                <li><a href="#projects">Proyectos</a></li>
+                <li><a href="#stack">Stack</a></li>
+                <li><a href="#contact">Contactame</a></li>
+            </ul>
+        </nav>
+    </header>
 
-      <button id="nav-toggle" aria-label="Abrir menú" aria-expanded="false" class="nav-toggle">
-        <svg width="22" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      </button>
+    <main>
 
-      <ul class="nav-links" id="nav-links">
-        <li><a href="#sobre">Sobre mí</a></li>
-        <li><a href="#roles">Roles</a></li>
-        <li><a href="#proyectos">Proyectos</a></li>
-        <li><a href="#stack">Stack</a></li>
-        <li><a href="#contacto">Contactame</a></li>
-      </ul>
-    </nav>
-  </header>
+        <!-- Sobre mí -->
+        <section id="about" class="section about fade-in">
+            <div class="about-container">
+                <div class="about-text">
+                    <h2>Sobre mí</h2>
+                    <p>
+                        Desarrollador full-stack orientado al backend, enfocado en APIs mantenibles, datos eficientes y arquitecturas escalables. 
+                        Trabajo con buenas prácticas desde el primer día y disfruto crear soluciones reales con diseño limpio y sólido.
+                    </p>
+                </div>
 
-  <main class="container main-grid">
-
-    <!-- SOBRE MÍ -->
-    <section id="sobre" class="panel reveal">
-      <div class="about-grid">
-        <div class="about-photo">
-          <img src="/assets/me-placeholder.png" alt="Foto de Agustín (placeholder)">
-        </div>
-        <div class="about-text">
-          <h2>Sobre mí</h2>
-          <p class="lead">
-            Desarrollador full-stack orientado al backend, enfocado en APIs mantenibles, datos eficientes y arquitecturas escalables.
-            Trabajo con buenas prácticas desde el primer día y disfruto crear soluciones reales con diseño limpio y sólido.
-          </p>
-          <p class="meta">Stack preferido: Node / Express • PostgreSQL • Docker • CI/CD</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ROLES -->
-    <section id="roles" class="panel reveal">
-      <h2>Roles desempeñados</h2>
-      <div class="roles-grid">
-        <article class="role-card">
-          <div class="role-icon" aria-hidden="true">
-            <!-- simple SVG icon -->
-            <svg viewBox="0 0 24 24"><path d="M3 12h18M12 3v18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-          </div>
-          <h3>Desarrollo Backend</h3>
-          <p>APIs REST, autenticación, modelado de datos, optimización, microservicios.</p>
-        </article>
-
-        <article class="role-card">
-          <div class="role-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M3 6h18v12H3z" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
-          </div>
-          <h3>Arquitectura & Buenas prácticas</h3>
-          <p>Separación de responsabilidades, patrones de diseño, modularidad, testing, CI/CD.</p>
-        </article>
-
-        <article class="role-card">
-          <div class="role-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M5 21c0-4 7-6 7-6s7 2 7 6" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
-          </div>
-          <h3>Full-Stack & DevOps</h3>
-          <p>Integración frontend-backend, despliegues en Render/Vercel/Supabase, Docker, control de versiones.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- PROYECTOS -->
-    <section id="proyectos" class="panel reveal">
-      <h2>Proyectos</h2>
-      <div class="projects-grid">
-
-        <!-- Project card template repeated -->
-        <article class="project-card">
-          <div class="project-media">
-            <img src="/assets/project-preview.png" alt="Preview Coming Soon">
-          </div>
-          <div class="project-body">
-            <h3>TaskFlow</h3>
-            <p class="project-desc">Plataforma de gestión de tareas con workflows, roles y APIs para integraciones B2B.</p>
-            <div class="project-actions">
-              <button class="btn ghost" aria-disabled="true">Ver código</button>
-              <button class="btn ghost" aria-disabled="true">Ver demo</button>
+                <div class="about-photo">
+                    <img src="assets/me-placeholder.png" alt="Foto del desarrollador">
+                </div>
             </div>
-          </div>
-        </article>
+        </section>
 
-        <article class="project-card">
-          <div class="project-media">
-            <img src="/assets/project-preview.png" alt="Preview Coming Soon">
-          </div>
-          <div class="project-body">
-            <h3>ToDoList</h3>
-            <p class="project-desc">To-do con sincronización en tiempo real, optimizado para baja latencia.</p>
-            <div class="project-actions">
-              <button class="btn ghost" aria-disabled="true">Ver código</button>
-              <button class="btn ghost" aria-disabled="true">Ver demo</button>
+        <!-- Roles desempeñados -->
+        <section id="roles" class="section roles fade-in">
+            <h2>Roles desempeñados</h2>
+
+            <div class="roles-grid">
+
+                <div class="role-card">
+                    <h3>🧩 Desarrollo Backend</h3>
+                    <ul>
+                        <li>APIs REST</li>
+                        <li>Autenticación</li>
+                        <li>Modelado de datos</li>
+                        <li>Optimización</li>
+                        <li>Microservicios</li>
+                    </ul>
+                </div>
+
+                <div class="role-card">
+                    <h3>🏗️ Arquitectura & Buenas prácticas</h3>
+                    <ul>
+                        <li>Patrones de diseño</li>
+                        <li>Modularidad</li>
+                        <li>Testing</li>
+                        <li>CI/CD</li>
+                        <li>Clean Code</li>
+                    </ul>
+                </div>
+
+                <div class="role-card">
+                    <h3>🛠️ Full-Stack & DevOps</h3>
+                    <ul>
+                        <li>Integración FE-BE</li>
+                        <li>Render / Vercel / Supabase</li>
+                        <li>Docker</li>
+                        <li>GitHub Actions</li>
+                        <li>Versionado</li>
+                    </ul>
+                </div>
+
             </div>
-          </div>
-        </article>
+        </section>
 
-        <article class="project-card">
-          <div class="project-media">
-            <img src="/assets/project-preview.png" alt="Preview Coming Soon">
-          </div>
-          <div class="project-body">
-            <h3>Notes App</h3>
-            <p class="project-desc">App de notas con cifrado local opcional y búsqueda rápida basada en índices.</p>
-            <div class="project-actions">
-              <button class="btn ghost" aria-disabled="true">Ver código</button>
-              <button class="btn ghost" aria-disabled="true">Ver demo</button>
+        <!-- Proyectos -->
+        <section id="projects" class="section projects fade-in">
+            <h2>Proyectos</h2>
+
+            <div class="projects-grid">
+
+                <div class="project-card">
+                    <h3>TaskFlow</h3>
+                    <img src="assets/preview-placeholder.png" alt="Preview">
+                    <p>Gestor de tareas completo con filtros, métricas y panel dinámico.</p>
+                    <div class="project-buttons">
+                        <a href="#" class="btn">Ver Código</a>
+                        <a href="#" class="btn">Ver Demo</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>ToDoList</h3>
+                    <img src="assets/preview-placeholder.png" alt="Preview">
+                    <p>Lista de tareas simple pero sólida, preparada para multiusuario.</p>
+                    <div class="project-buttons">
+                        <a href="#" class="btn">Ver Código</a>
+                        <a href="#" class="btn">Ver Demo</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>Notes App</h3>
+                    <img src="assets/preview-placeholder.png" alt="Preview">
+                    <p>Aplicación de notas con categorías, búsqueda y sincronización.</p>
+                    <div class="project-buttons">
+                        <a href="#" class="btn">Ver Código</a>
+                        <a href="#" class="btn">Ver Demo</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>Tienda de ropa virtual (microservicios)</h3>
+                    <img src="assets/preview-placeholder.png" alt="Preview">
+                    <p>E-commerce modular basado en microservicios escalables.</p>
+                    <div class="project-buttons">
+                        <a href="#" class="btn">Ver Código</a>
+                        <a href="#" class="btn">Ver Demo</a>
+                    </div>
+                </div>
+
             </div>
-          </div>
-        </article>
+        </section>
 
-        <article class="project-card">
-          <div class="project-media">
-            <img src="/assets/project-preview.png" alt="Preview Coming Soon">
-          </div>
-          <div class="project-body">
-            <h3>Tienda de ropa virtual (microservicios)</h3>
-            <p class="project-desc">Arquitectura por microservicios: catálogo, carrito, pagos y API para front e integraciones.</p>
-            <div class="project-actions">
-              <button class="btn ghost" aria-disabled="true">Ver código</button>
-              <button class="btn ghost" aria-disabled="true">Ver demo</button>
+        <!-- Stack Técnico -->
+        <section id="stack" class="section stack fade-in">
+            <h2>Stack Técnico</h2>
+
+            <div class="stack-grid">
+
+                <!-- FRONTEND -->
+                <div class="stack-col">
+                    <h3>Frontend</h3>
+                    <div class="stack-items">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vite/vite-original.svg" alt="Vite">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JS">
+                    </div>
+                </div>
+
+                <!-- BACKEND -->
+                <div class="stack-col">
+                    <h3>Backend</h3>
+                    <div class="stack-items">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" alt="Express">
+                        <img src="https://www.python.org/static/favicon.ico" alt="Python">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jwt/jwt-plain.svg" alt="JWT">
+                    </div>
+                </div>
+
+                <!-- DATABASE -->
+                <div class="stack-col">
+                    <h3>Database</h3>
+                    <div class="stack-items">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis">
+                        <img src="https://app.supabase.com/favicon.ico" alt="Supabase">
+                    </div>
+                </div>
+
+                <!-- TOOLS -->
+                <div class="stack-col">
+                    <h3>Tools</h3>
+                    <div class="stack-items">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" alt="Cloud">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg" alt="Vercel">
+                    </div>
+                </div>
+
             </div>
-          </div>
-        </article>
 
-      </div>
-    </section>
+        </section>
 
-    <!-- STACK TÉCNICO -->
-    <section id="stack" class="panel reveal">
-      <h2>Stack técnico</h2>
-      <div class="stack-grid">
+        <!-- Contacto -->
+        <section id="contact" class="section contact fade-in">
+            <h2>Contactame</h2>
 
-        <div class="stack-col">
-          <h4>FrontEnd</h4>
-          <ul class="tech-list">
-            <li class="tech-item"><img src="/assets/tech/react.svg" alt="React logo"><span>React</span></li>
-            <li class="tech-item"><img src="/assets/tech/vite.svg" alt="Vite"><span>Vite</span></li>
-            <li class="tech-item"><img src="/assets/tech/html.svg" alt="HTML"><span>HTML</span></li>
-            <li class="tech-item"><img src="/assets/tech/css.svg" alt="CSS"><span>CSS</span></li>
-            <li class="tech-item"><img src="/assets/tech/js.svg" alt="JavaScript"><span>JavaScript</span></li>
-          </ul>
-        </div>
+            <form class="contact-form">
+                <input type="text" placeholder="Nombre" required>
+                <input type="email" placeholder="Email" required>
+                <textarea placeholder="Mensaje" required></textarea>
+                <button type="submit">Enviar</button>
+            </form>
 
-        <div class="stack-col">
-          <h4>BackEnd</h4>
-          <ul class="tech-list">
-            <li class="tech-item"><img src="/assets/tech/node.svg" alt="Node"><span>Node</span></li>
-            <li class="tech-item"><img src="/assets/tech/express.svg" alt="Express"><span>Express</span></li>
-            <li class="tech-item"><img src="/assets/tech/python.svg" alt="Python"><span>Python</span></li>
-            <li class="tech-item"><img src="/assets/tech/django.svg" alt="Django"><span>Django</span></li>
-            <li class="tech-item"><img src="/assets/tech/jwt.svg" alt="JWT"><span>JWT</span></li>
-            <li class="tech-item"><img src="/assets/tech/microservices.svg" alt="Microservices"><span>Microservices</span></li>
-          </ul>
-        </div>
+        </section>
 
-        <div class="stack-col">
-          <h4>Database</h4>
-          <ul class="tech-list">
-            <li class="tech-item"><img src="/assets/tech/postgres.svg" alt="PostgreSQL"><span>PostgreSQL</span></li>
-            <li class="tech-item"><img src="/assets/tech/redis.svg" alt="Redis"><span>Redis</span></li>
-            <li class="tech-item"><img src="/assets/tech/supabase.svg" alt="Supabase"><span>Supabase</span></li>
-          </ul>
-        </div>
+    </main>
 
-        <div class="stack-col">
-          <h4>Tools</h4>
-          <ul class="tech-list">
-            <li class="tech-item"><img src="/assets/tech/docker.svg" alt="Docker"><span>Docker</span></li>
-            <li class="tech-item"><img src="/assets/tech/github.svg" alt="GitHub"><span>GitHub</span></li>
-            <li class="tech-item"><img src="/assets/tech/actions.svg" alt="GitHub Actions"><span>GitHub Actions</span></li>
-            <li class="tech-item"><img src="/assets/tech/render.svg" alt="Render"><span>Render</span></li>
-            <li class="tech-item"><img src="/assets/tech/vercel.svg" alt="Vercel"><span>Vercel</span></li>
-          </ul>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- CONTACTO -->
-    <section id="contacto" class="panel reveal">
-      <h2>Contactame</h2>
-
-      <div class="contact-grid">
-        <form id="contact-form" class="contact-form" novalidate>
-          <div class="form-row">
-            <label for="name">Nombre</label>
-            <input id="name" name="name" type="text" required placeholder="Tu nombre completo">
-          </div>
-
-          <div class="form-row">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" required placeholder="tu@ejemplo.com">
-          </div>
-
-          <div class="form-row">
-            <label for="message">Mensaje</label>
-            <textarea id="message" name="message" rows="6" required placeholder="Contame en breve de qué se trata"></textarea>
-          </div>
-
-          <div class="form-row actions">
-            <button type="submit" class="btn">Enviar</button>
-            <div id="form-status" class="form-status" aria-live="polite"></div>
-          </div>
-        </form>
-
-        <div class="contact-info">
-          <h3>Otras vías</h3>
-          <p>Email: <a href="mailto:agustin@example.com">agustin@example.com</a></p>
-          <p>GitHub: <a
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -73,3 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Tab') document.body.classList.add('show-focus');
   });
 });
+// Animación de scroll suave ya activada por CSS
+// Agregamos un handler básico del formulario
+
+document.querySelector(".contact-form").addEventListener("submit", e => {
+    e.preventDefault();
+    alert("Formulario enviado correctamente (falta backend).");
+});
