@@ -189,10 +189,10 @@
         <section id="contact" class="section contact fade-in">
             <h2>Contactame</h2>
 
-            <form class="contact-form">
-                <input type="text" placeholder="Nombre" required>
-                <input type="email" placeholder="Email" required>
-                <textarea placeholder="Mensaje" required></textarea>
+            <form class="contact-form" action="https://formspree.io/f/xzzvledn" method="POST">
+                <input type="text" name="name" placeholder="Tu nombre" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <textarea name="message" placeholder="Tu mensaje..." required></textarea>
                 <button type="submit">Enviar</button>
             </form>
 
