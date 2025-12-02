@@ -57,7 +57,7 @@ body{
 
 /* About */
 .about-grid{display:grid;grid-template-columns:160px 1fr;gap:20px;align-items:center}
-.about-photo img{width:160px;height:160px;border-radius:10px;object-fit:cover;border:1px solid rgba(0,255,156,0.06);background:linear-gradient(135deg,#042 10%, #063 60%)}
+.about-photo img{width:160px;height:200px;border-radius:10px;object-fit:cover;border:1px solid rgba(0,255,156,0.06);background:linear-gradient(135deg,#042 10%, #063 60%)}
 .lead{color:var(--txt);font-size:1rem}
 .meta{color:var(--sub);font-size:0.9rem;margin-top:8px}
 
